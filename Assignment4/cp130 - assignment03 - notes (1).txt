@@ -1,0 +1,170 @@
+
+public final class SimpleOrderQueue<T, E extends Order> implements OrderQueue<T,E> {
+	private TreeSet<E> queue;
+	private BiPredicate<T,E> filter;
+	private Consumer<E> orderPrcessor;
+	private T threshold;
+}
+
+public SImpleOrderQueue(final T threshold, final BiPredicate<T,E> filter){
+	queue = new TreeSet<>();
+	this.threshold = threshold;
+	this.filter = filter;
+}
+
+public SimpleOrderQueue(final T threshold, final BiPredicate<T,E>){
+	
+	
+}
+
+public void enqueue(final E order){
+	queue.add(order);
+	dispatcher(...);
+}
+
+public E dequeue(){
+	E order = null;
+	
+	if(!queue.isEmpty()){
+		order = queue.first
+	
+		if(filter.test(threshold, order)){
+			queue.remove(order);
+		}else{
+			order = null;
+		}
+	}
+	return order;
+}
+
+public void dispathcOrders(){
+	E order;
+	
+	while((order = dequeue()) != null){
+		if (orderPrcessor != null){
+			orderProcesseor.accept(order);
+		}
+	}
+}
+
+
+public final void setThreshold(final T threshold){
+	this.threshold = threshold;
+	dispatchOrders();
+}
+
+///////////////////////////////////SimpleOrderManager
+
+public class SimpleOrderManager implements OrderManager{
+	private String stockTickerSymbol;
+	protected OrderQueue<Integer>.....
+}
+
+public SimpleOrderManager(final String stockTickerSYmbol, final int price){
+	this(stockTickerSYmbol);
+	// Create the stop buy oder queue and associated pieces
+	stopBuyOrderQUeue = new SimpleOrderQueue<>(price, (t,o)-> o.getPrice() <= t, Comparator.comparing(StopBuyOrder::getPrice).thenComparing(StopBuyOrder::compareTo));
+	//Create the stop sell order queue ...
+	stopSellOrderQueue = new SimpleOrderQueue<>(price, (t,o)-> o.getPrice() <= t, Comparator.comparing(StopSellOrder::getPrice).reversed().thenComparing(StopSellOrder::compareTo))
+}
+
+public final String getSymbol(){
+	return stockTickerSymbol;
+}
+
+
+public final void queueOrder(final StopBuyOrder order){
+	stopBuyOrderQUeue....
+	
+}
+
+public final void setBuyOrderProcessor(final Consumer<StopBuyOrder> processor){
+	stopBuyOrderQueue.setOrderProcessor(processor);
+}
+
+public final voi
+d setSellOrderProcessor(final Consumer<...>){
+	
+	
+}
+
+
+
+/////////////////////////SimpleBroker
+
+privateHashMap<String, OrderManager> orderManagerMap;
+protected OrderQueue<Boolean, Order> marketOrders;
+
+protected SimpleBroker(final String brokerName, final StockExchange exchg, final AccountManager acctMgr){
+	name brokerName;
+	....
+	
+}
+
+
+public Simplebroker(final String brokername, final AccountManager acctMgr, final StockExchange exchg){
+	this(brokerName, exhg, acctMgr);
+	
+	//Create the market order queue, & order processor
+	marketOrders = new SimpleOrderQueue<>(exchg.isOpen(), (Boolean t, Order o) -> t)
+	Consumer<Order> stockTrader = (order)-> {
+		logger.info(String.format("Executing - %s", order));
+		final int sharPrice = stockExchange.executeTrade(order);
+		try{
+			final Account acct = accountManager.getAccount(order.getAccountId());
+			acct.reflectOrder(order, sharePrice);
+			logger.info(String.format("New Balance = %d", acct.getBalance()));
+		}catch(final AccountException ex){
+			logger.error(String.format("Unable to update account, %s",order.getAccount()));
+		}
+	};
+	marketOrders.setOrderProcessor(stockTrader);
+	
+	//Create the order managers
+	initializeOrderManagers();
+
+	exchg.addExchangeListener(this);
+}
+
+protected final void intitilizeOrderManagers(){
+	orderManagerMap = new HashMap<>();
+	final Consumer<StopBuyOrder> moveBuy2MarketProc = (StopBuyOrder order) -> marketOrders.enqueue(order);
+	final Consumer<StopSellOrder> moveSell2MarketProc = (StopSellOrder order) -> marketOrders.enqueue(order);
+	for(String ticker : stockExchange.getTickers()){
+		final int currPrice = stockExchange.getQuote(ticker).getPrice();
+		OrderManager orderMgr = createOrderManager(ticker, ....);
+	}
+	.......
+
+}
+
+
+protected
+
+public synchronized final void priceChanged(final ExchangeEvent event){
+	checkInvariants();
+	if(logger.isInfoEnabled()){
+		logger.info(String.format("Processing price change[%s:%d]",event.getTicker(), event.getPrice()));
+		
+	}
+	OrderManager orderMgr;
+	orderMgr = orderManagerMap.get(event.getTicker());
+	if(orderMgr != null){
+		....
+	}
+	
+}
+
+
+
+public synchronized final String getName(){
+	
+}
+
+public synchronized final Account reateAccount(final String username, final String password, ...){
+	
+}
+
+public synchronized final Account getAccount(final String username, final String passwor){
+	
+}

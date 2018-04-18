@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!-- Bean implementing edu.uw.ext.framework.account.AccountFactory -->
+  <bean id="AccountFactory" class="main.java.edu.uw.ajs.account.AccountFactoryImpl"/>
+
+  <!-- Bean implementing edu.uw.ext.framework.account.Address -->
+  <bean id="Address" class="main.java.edu.uw.ajs.account.AddressImpl" scope="prototype"/>
+
+  <!-- Bean implementing edu.uw.ext.framework.account.CreditCard -->
+  <bean id="CreditCard" class="main.java.edu.uw.ajs.account.CreditCardImpl" scope="prototype"/>
+
+  <!-- Bean implementing edu.uw.ext.framework.account.Account -->
+  <bean id="Account" class="main.java.edu.uw.ajs.account.AccountImpl" scope="prototype"/>
+
+  <!-- Bean implementing edu.uw.ext.framework.account.AccountManagerFactory -->
+  <bean id="AccountManagerFactory" class="main.java.edu.uw.ajs.account.AccountManagerFactoryImpl"/>
+
+    <!-- Bean implementing edu.uw.ext.framework.account.AccountManager -->
+  <bean id="AccountManager" class="main.java.edu.uw.ajs.account.AccountManagerImpl"/>
+
+  <!-- Bean providing RDBMS implementation of edu.uw.ext.framework.account.DaoFactory -->
+  <bean id="DaoFactory" class="main.java.edu.uw.ajs.dao.JsonDaoFactoryImpl"/>
+  
+  <!-- Bean providing RDBMS implementation of edu.uw.ext.framework.account.AccountDao -->
+  <bean id="AccountDao" class="main.java.edu.uw.ajs.dao.JsonAccountDaoImpl"/>
+  
+  <!-- Bean providing RDBMS implementation of edu.uw.ext.framework.account.DaoFactoryException -->
+  <bean id="DaoFactoryException" class="edu.uw.ext.framework.dao.DaoFactoryException"/>
+  
+</beans>
+
